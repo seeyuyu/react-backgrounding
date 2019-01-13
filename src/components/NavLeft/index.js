@@ -3,7 +3,7 @@ import { Menu, Icon } from 'antd';
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { switchMenu, saveBtnList } from './../../redux/action'
-import MenuConfig from './../../config/menuConfig'
+import MenuConfig from './../../config/menuConfigNew'
 import './index.less'
 const SubMenu = Menu.SubMenu;
 class NavLeft extends React.Component {
@@ -38,6 +38,7 @@ class NavLeft extends React.Component {
                 return (
                     <SubMenu title={item.title} key={item.key}>
                         { this.renderMenu(item.children)}
+
                     </SubMenu>
                 )
             }

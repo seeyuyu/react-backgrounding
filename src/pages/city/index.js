@@ -21,7 +21,8 @@ export default class City extends React.Component{
     requestList = ()=>{
         let _this = this;
         axios.ajax({
-            url: '/open_city',
+            url: '/api/login',
+            method:'POST',
             data:{
                 params:{
                     page:this.params.page

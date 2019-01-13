@@ -1,7 +1,7 @@
 import React from 'react'
 import { HashRouter, Route, Switch, Redirect} from 'react-router-dom'
 import App from './App'
-import Login from './pages/login'
+import Login from './pages/login/login.js'
 import Admin from './admin'
 import Home from './pages/home';
 import Buttons from './pages/ui/buttons'
@@ -28,6 +28,7 @@ import Bar from './pages/echarts/bar/index'
 import Pie from './pages/echarts/pie/index'
 import Line from './pages/echarts/line/index'
 import Permission from './pages/permission'
+import Register from './pages/register/register.js'
 
 export default class ERouter extends React.Component{
 
@@ -37,6 +38,7 @@ export default class ERouter extends React.Component{
                 <App>
                     <Switch>
                         <Route path="/login" component={Login}/>
+                        <Route path="/register" component={Register}/>
                         <Route path="/common" render={() =>
                             <Common>
                                 <Route path="/common/order/detail/:orderId" component={OrderDetail} />

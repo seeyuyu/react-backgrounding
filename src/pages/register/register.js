@@ -1,12 +1,79 @@
 import React from 'react'
+import axios from '../../axios/index'
+import Footer from '../../components/Footer'
+import Utils from '../../utils/utils'
+import './register.less';
+import MD5 from 'js-md5';
+
 import {Card,Form,Button,Input,Checkbox,Radio,Select,Switch,DatePicker,TimePicker,Upload,Icon,message, InputNumber} from 'antd'
 import moment from 'moment';
 import { fastest } from 'sw-toolbox';
+
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
 const TextArea = Input.TextArea;
-class FormRegister extends React.Component{
+
+export default class Register extends React.Component {
+    state = {};
+    componentDidMount() {//每次进入登录页清除之前的登录信息
+        
+    }
+
+    registerReq = (params) => {
+        // window.location.href = '/#/';
+        console.log(params)
+        let a  = JSON.parse(params);
+        // console.log(JSON.parse(params));
+        console.log(JSON.parse(params));
+        console.log(MD5(a.password));
+
+        axios.ajax({
+          url:'/api/register',
+          methods:"post",
+          data:{
+            username:params.username,
+            password:params.password
+
+          }
+        }).then(res=>{
+          console.log(res);
+        })
+        
+    };
+
+    render() {
+        return (
+            <div className="login-page">
+                <div className="login-header">
+                    <div className="logo">
+                        <img src="/assets/logo-ant.svg" alt="慕课后台注册系统"/>
+                        注册用户信息
+                    </div>
+                </div>
+                <div className="login-content-wrap">
+                    <div className="login-content">
+                        <div className="word">共享出行 <br />引领城市新经济</div>
+                        <div className="login-box">
+                            <div className="error-msg-wrap">
+                                <div
+                                    className={this.state.errorMsg?"show":""}>
+                                    {this.state.errorMsg}
+                                </div>
+                            </div>
+                            <div className="title">注册新员工</div>
+                            <RegisterForm ref="register" registerSubmit={this.registerReq}/>
+                        </div>
+                    </div>
+                </div>
+                <Footer/>
+            </div>
+        )
+    }
+}
+
+
+class RegisterForm extends React.Component{
 
     state={
       /* 默认是 禁止提交状态*/ 
@@ -91,7 +158,7 @@ class FormRegister extends React.Component{
                     <Form layout="horizontal">
                         <FormItem label="用户名" {...formItemLayout}>
                             {
-                                getFieldDecorator('userName', {
+                                getFieldDecorator('username', {
                                     initialValue: 'yyt',
                                     rules: [
                                         {
@@ -106,7 +173,7 @@ class FormRegister extends React.Component{
                         </FormItem>
                         <FormItem label="密码" {...formItemLayout}>
                             {
-                                getFieldDecorator('userPwd', {
+                                getFieldDecorator('password', {
                                     initialValue: '123',
                                     rules: [
                                       {
@@ -186,4 +253,4 @@ class FormRegister extends React.Component{
         );
     }
 }
-export default Form.create()(FormRegister);
+RegisterForm = Form.create()(RegisterForm);

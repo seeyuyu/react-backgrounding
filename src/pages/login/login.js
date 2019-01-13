@@ -1,9 +1,9 @@
-import React from 'react'
-import {Form, Input, Button} from 'antd'
-import axios from '../../axios/index'
-import Footer from '../../components/Footer'
-import Utils from '../../utils/utils'
-import './index.less'
+import React from 'react';
+import {Form, Input, Button} from 'antd';
+import axios from '../../axios/index';
+import Footer from '../../components/Footer';
+// import Utils from '../../utils/utils';
+import './login.less';
 const FormItem = Form.Item;
 
 export default class Login extends React.Component {
@@ -14,7 +14,34 @@ export default class Login extends React.Component {
     }
 
     loginReq = (params) => {
-        window.location.href = '/#/';
+        // window.location.href = '/#/';
+        let username =params.username;
+        let password =params.password;
+
+        console.log(params);
+        axios.ajax({
+          url : '/api/login',
+          method :'POST',
+          data:{
+            username,
+            password
+        }
+        }).then((res) => {
+          console.log(res.token);
+           
+          if(!window.localStorage){
+            alert("浏览器支持localstorage");
+            return false;
+          }else{
+            let storage=window.localStorage;
+            storage.token=res.data.token;
+            console.log("storage.token is ");
+            console.log(storage.token)
+          }
+          console.log("res is =------");
+        }).catch((err) => {
+          console.log(err)
+        })
     };
 
     render() {
@@ -23,12 +50,12 @@ export default class Login extends React.Component {
                 <div className="login-header">
                     <div className="logo">
                         <img src="/assets/logo-ant.svg" alt="慕课后台管理系统"/>
-                        React全家桶+AntD 共享经济热门项目后台管理系统
+                        杨大脚超市霍营店
                     </div>
                 </div>
                 <div className="login-content-wrap">
                     <div className="login-content">
-                        <div className="word">共享出行 <br />引领城市新经济</div>
+                        <div className="word">智能互联<br />引领城市新经济</div>
                         <div className="login-box">
                             <div className="error-msg-wrap">
                                 <div
@@ -36,7 +63,7 @@ export default class Login extends React.Component {
                                     {this.state.errorMsg}
                                 </div>
                             </div>
-                            <div className="title">慕课欢迎你</div>
+                            <div className="title">二狗欢迎你</div>
                             <LoginForm ref="login" loginSubmit={this.loginReq}/>
                         </div>
                     </div>
@@ -49,9 +76,15 @@ export default class Login extends React.Component {
 
 class LoginForm extends React.Component {
     state = {};
-
+    doRegister = (e) => {
+      console.log(123)
+      window.location.href='/#/register'
+    }
     loginSubmit = (e)=> {
         e && e.preventDefault();
+        console.log("e is ---》");
+        console.log(e);
+
         const _this = this;
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
@@ -63,6 +96,7 @@ class LoginForm extends React.Component {
             }
         });
     };
+ 
 
     checkUsername = (rule, value, callback) => {
         var reg = /^\w+$/;
@@ -89,7 +123,7 @@ class LoginForm extends React.Component {
             <Form className="login-form">
                 <FormItem>
                     {getFieldDecorator('username', {
-                        initialValue:'admin',
+                        // initialValue:'lidy',
                         rules: [{validator: this.checkUsername}]
                     })(
                         <Input placeholder="用户名"/>
@@ -97,7 +131,7 @@ class LoginForm extends React.Component {
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('password', {
-                        initialValue:'admin',
+                        // initialValue:'admin',
                         rules: [{validator: this.checkPassword}]
                     })(
                         <Input type="password" placeholder="密码" wrappedcomponentref={(inst) => this.pwd = inst } />
@@ -107,6 +141,10 @@ class LoginForm extends React.Component {
                     <Button type="primary" onClick={this.loginSubmit} className="login-form-button">
                         登录
                     </Button>
+                </FormItem>
+                <FormItem  className='login-form-register'>
+                    立即注册
+                    <Button onClick={this.doRegister}>注册</Button>
                 </FormItem>
             </Form>
         )
