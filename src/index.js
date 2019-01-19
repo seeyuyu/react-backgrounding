@@ -18,6 +18,7 @@ axios.interceptors.request.use(function (config) {
     let storage = window.localStorage;
     let token = storage.token;
     config.headers.name = `lidy`;
+    
     if (token) {
       config.headers.Authorization = `token ${token}`;
     }else{

@@ -20,12 +20,13 @@ export default class Login extends React.Component {
 
         console.log(params);
         axios.ajax({
-          url : '/api/login',
+          url : '/employee/login',
           method :'POST',
           data:{
             username,
             password
-        }
+        },
+        withCredentials:true
         }).then((res) => {
           console.log(res.token);
            
