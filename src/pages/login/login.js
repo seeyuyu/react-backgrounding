@@ -26,7 +26,7 @@ export default class Login extends React.Component {
             username,
             password
         },
-        withCredentials:true
+        // withCredentials:true
         }).then((res) => {
           console.log(res.token);
            
@@ -79,7 +79,19 @@ class LoginForm extends React.Component {
     state = {};
     doRegister = (e) => {
       console.log(123)
-      window.location.href='/#/register'
+    //   window.location.href='/#/register'
+        axios.ajax({
+            url:"/employee/login",
+            method:"POST",
+            data:{
+                username:"lidy",
+                password:'123'
+            }
+        }).then((res) =>{
+            console.log(res)
+        }).catch(err =>{
+            console.log(err)
+        })
     }
     loginSubmit = (e)=> {
         e && e.preventDefault();

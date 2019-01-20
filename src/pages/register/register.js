@@ -29,12 +29,14 @@ export default class Register extends React.Component {
         console.log(MD5(a.password));
 
         axios.ajax({
-          url:'/api/register',
+          url:'/employee/register',
           methods:"post",
           data:{
             username:params.username,
-            password:params.password
-
+            password:params.password,
+            email:params.email,
+            age:params.age,
+            address:params.address
           }
         }).then(res=>{
           console.log(res);
@@ -189,6 +191,24 @@ class RegisterForm extends React.Component{
                                 )
                             }
                         </FormItem>
+                        <FormItem label="邮箱" {...formItemLayout}>
+                        {
+                            getFieldDecorator('eamil', {
+                                initialValue: 'lidongyan_cn@163.com',
+                                rules: [
+                                  {
+                                      required: true,
+                                      message: '邮箱不能为空'
+                                  },{
+                                    pattern:  '/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/',
+                                    message:'请正确填写'
+                                  }
+                              ]
+                            })(
+                                <Input prefix={<Icon type="mail"/>} type="text" placeholder="请输入密码" />
+                            )
+                        }
+                    </FormItem>
                         <FormItem label="性别" {...formItemLayout}>
                             {
                                 getFieldDecorator('sex', {

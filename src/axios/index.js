@@ -24,14 +24,14 @@ export default class Axios {
         }
         // let baseApi = 'https://www.easy-mock.com/mock/5a7278e28d0c633b9c4adbd7/api';
         // let baseApi = 'http://39.107.68.213';
-        let baseApi = 'http://127.0.0.1:3001';
+        // let baseApi = 'http://127.0.0.1:3001';
 
 
         return new Promise((resolve,reject)=>{
             axios({
                 url:options.url,
                 method:options.method || 'get',
-                baseURL:baseApi,
+                // baseURL:baseApi,
                 timeout:5000,
                 data: options.data ||  '',
                 params: (options.data && options.data.params) || ''
