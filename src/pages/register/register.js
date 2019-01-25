@@ -30,16 +30,17 @@ export default class Register extends React.Component {
 
         axios.ajax({
           url:'/employee/register',
-          methods:"post",
+          method:"post",
           data:{
-            username:params.username,
-            password:params.password,
-            email:params.email,
-            age:params.age,
-            address:params.address
+            username:window.encodeURIComponent(a.username) ,
+            password:MD5(a.password),
+            email:a.email,
+            code:a.verify
           }
         }).then(res=>{
           console.log(res);
+        }).catch(err=>{
+            console(`err is ${err}`)
         })
         
     };
@@ -64,7 +65,7 @@ export default class Register extends React.Component {
                                 </div>
                             </div>
                             <div className="title">注册新员工</div>
-                            <RegisterForm ref="register" registerSubmit={this.registerReq}/>
+                            <RegisterForm ref="register" handleSubmit={this.registerReq}/>
                         </div>
                     </div>
                 </div>
@@ -76,7 +77,6 @@ export default class Register extends React.Component {
 
 
 class RegisterForm extends React.Component{
-
     state={
       /* 默认是 禁止提交状态*/ 
       handleUpData:true
@@ -94,16 +94,21 @@ class RegisterForm extends React.Component{
         })
       }
     } 
-    handleSubmit = ()=>{
+    handleSubmit = (e)=>{
+        // alert(e);
         let userInfo = this.props.form.getFieldsValue();
-        this.props.form.validateFieldsAndScroll( (err,value) => {
+        console.log(userInfo)
+        let _this =this;
+        console.log(`e is ${e}`)
+        console.log(e)
+        this.props.form.validateFieldsAndScroll( (err,values) => {
           console.log(err)
-          console.log(`value is ${value}`);
-          console.log(value)
+          console.log(`value is ${values}`);
+          console.log(values)
           if(!err){
             message.success(`${userInfo.userName}恭喜你提交成功`);
             console.log(123123)
-            this.props.registerSubmit(JSON.stringify(value))
+            _this.props.handleSubmit(JSON.stringify(values))
           }
         })
         // console.log(JSON.stringify(userInfo))
@@ -129,7 +134,18 @@ class RegisterForm extends React.Component{
             }));
         }
     }
-
+    getVerify = () =>{
+        let userInfo = this.props.form.getFieldsValue();
+        console.log(`eamil is ${userInfo.email}`)
+        axios.ajax({
+            url:'/employee/verify',
+            method:"POST",
+            data:{
+                username:userInfo.username,
+                email:userInfo.email
+            }
+        })
+    }
     render(){
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
@@ -158,6 +174,7 @@ class RegisterForm extends React.Component{
             <div>
                 <Card title="注册表单">
                     <Form layout="horizontal">
+
                         <FormItem label="用户名" {...formItemLayout}>
                             {
                                 getFieldDecorator('username', {
@@ -173,6 +190,43 @@ class RegisterForm extends React.Component{
                                 )
                             }
                         </FormItem>
+                        <FormItem label="邮箱" {...formItemLayout}>
+                        {
+                            getFieldDecorator('email', {
+                                initialValue: 'lidongyan_cn@163.com',
+                                rules: [
+                                {
+                                  required: true,
+                                  message: '邮箱不能为空'
+                                },{
+                                pattern:  /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+                                message:'请正确填写'
+                              }
+                          ]
+                        })(
+                            <Input prefix={<Icon type="mail"/>} type="text" placeholder="请输入邮箱" />
+                        )
+                        }
+                        </FormItem>
+
+                        <FormItem {...offsetLayout}>
+                            <Button type="primary"  onClick={this.getVerify}>获取验证码</Button>
+                        </FormItem>
+                        <FormItem label="验证码" {...formItemLayout}>
+                        {
+                            getFieldDecorator('verify',{
+                                initialValue:'',
+                                rules:[
+                                    {
+                                        required:true,
+                                        message:"请输入验证码"
+                                    }
+                                ]
+                            })(
+                                <Input type ='text' placeholder="请输入验证码"/>
+                            )
+                        }
+                    </FormItem>
                         <FormItem label="密码" {...formItemLayout}>
                             {
                                 getFieldDecorator('password', {
@@ -191,86 +245,42 @@ class RegisterForm extends React.Component{
                                 )
                             }
                         </FormItem>
-                        <FormItem label="邮箱" {...formItemLayout}>
-                        {
-                            getFieldDecorator('eamil', {
-                                initialValue: 'lidongyan_cn@163.com',
-                                rules: [
-                                  {
-                                      required: true,
-                                      message: '邮箱不能为空'
-                                  },{
-                                    pattern:  '/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/',
-                                    message:'请正确填写'
-                                  }
-                              ]
-                            })(
-                                <Input prefix={<Icon type="mail"/>} type="text" placeholder="请输入密码" />
-                            )
-                        }
-                    </FormItem>
-                        <FormItem label="性别" {...formItemLayout}>
+                        <FormItem label="确认密码" {...formItemLayout}>
                             {
-                                getFieldDecorator('sex', {
-                                    initialValue: '1'
+                                getFieldDecorator('Rpassword', {
+                                    initialValue: '123',
+                                    rules: [
+                                      {
+                                          required: true,
+                                          message: '密码不能为空'
+                                      },{
+                                        max:12, min:3,
+                                        message:'请在3位和12位之间'
+                                      }
+                                  ]
                                 })(
-                                    <RadioGroup>
-                                        <Radio value="1">男</Radio>
-                                        <Radio value="2">女</Radio>
-                                    </RadioGroup>
+                                    <Input prefix={<Icon type="lock"/>} type="password" placeholder="请输入密码" />
                                 )
                             }
                         </FormItem>
-                        <FormItem label="年龄" {...formItemLayout}>
-                            {
-                                getFieldDecorator('age', {
-                                    initialValue: 18
-                                })(
-                                    <InputNumber  />
-                                )
-                            }
-                        </FormItem>
-                      
-                        <FormItem label="联系地址" {...formItemLayout}>
-                            {
-                                getFieldDecorator('address',{
-                                    initialValue:'北京市海淀区奥林匹克公园'
-                                })(
-                                    <TextArea
-                                        autosize={rowObject}
-                                    />
-                                )
-                            }
-                        </FormItem>
+                  
 
-                        <FormItem label="头像" {...formItemLayout}>
-                            {
-                                getFieldDecorator('userImg')(
-                                    <Upload
-                                        listType="picture-card"
-                                        showUploadList={false}
-                                        action="//jsonplaceholder.typicode.com/posts/"
-                                        onChange={this.handleChange}
-                                    >
-                                    {this.state.userImg?<img src={this.state.userImg}/>:<Icon type="plus"/>}
-                                    </Upload>
-                                )
-                            }
-                        </FormItem>
                         <FormItem {...offsetLayout}>
                             {
-                                getFieldDecorator('userImg')(
+                            getFieldDecorator('userImg')(
                                    <Checkbox onChange={this.handleMakeSure}>我已阅读过<a href="#">慕课协议</a></Checkbox>
                                 )
                             }
                         </FormItem>
+
                         <FormItem {...offsetLayout}>
                             <Button type="primary" disabled={this.state.handleUpData} onClick={this.handleSubmit}>注册</Button>
                         </FormItem>
+
                     </Form>
                 </Card>
             </div>
         );
     }
 }
-RegisterForm = Form.create()(RegisterForm);
+RegisterForm = Form.create({})(RegisterForm);

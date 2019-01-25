@@ -4,6 +4,7 @@ import axios from '../../axios/index';
 import Footer from '../../components/Footer';
 // import Utils from '../../utils/utils';
 import './login.less';
+import MD5 from 'js-md5'
 const FormItem = Form.Item;
 
 export default class Login extends React.Component {
@@ -16,7 +17,7 @@ export default class Login extends React.Component {
     loginReq = (params) => {
         // window.location.href = '/#/';
         let username =params.username;
-        let password =params.password;
+        let password =MD5(params.password);
 
         console.log(params);
         axios.ajax({
@@ -80,18 +81,6 @@ class LoginForm extends React.Component {
     doRegister = (e) => {
       console.log(123)
     //   window.location.href='/#/register'
-        axios.ajax({
-            url:"/employee/login",
-            method:"POST",
-            data:{
-                username:"lidy",
-                password:'123'
-            }
-        }).then((res) =>{
-            console.log(res)
-        }).catch(err =>{
-            console.log(err)
-        })
     }
     loginSubmit = (e)=> {
         e && e.preventDefault();

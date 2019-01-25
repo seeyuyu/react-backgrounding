@@ -52,6 +52,20 @@ const menuList = [
     {
         title: '商品管理',
         key: '/commodity', 
+        children:[
+            {
+                title:'添加商品',
+                key:'/commodity/add'
+            },
+            {
+                title:'查看商品',
+                key:'/commodity/view'
+            },
+            {
+                title:'下架商品',
+                key:'/commodity/out'
+            }
+        ]
     },
     {
         title: '账单记录',

@@ -29,6 +29,7 @@ import Pie from './pages/echarts/pie/index'
 import Line from './pages/echarts/line/index'
 import Permission from './pages/permission'
 import Register from './pages/register/register.js'
+import Commodity from './pages/commodity/commodity.js'
 
 export default class ERouter extends React.Component{
 
@@ -70,6 +71,7 @@ export default class ERouter extends React.Component{
                                     <Route path="/charts/pie" component={Pie} />
                                     <Route path="/charts/line" component={Line} />
                                     <Route path="/permission" component={Permission} />
+                                    <Route path="/commodity/view" component={Commodity}/>
                                     <Redirect to="/home" />
                                     {/* <Route component={NoMatch} /> */}
                                 </Switch>
