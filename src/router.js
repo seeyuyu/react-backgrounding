@@ -34,12 +34,12 @@ import Commodity from './pages/commodity/commodity.js'
 export default class ERouter extends React.Component{
 
     render(){
-        return (
-            <HashRouter>
-              <App>
-                  <Switch>
-                      <Route path="/login" component={Login}/>
-                      <Route path="/register" component={Register}/>
+    return (
+        <HashRouter>
+            <App>
+                <Switch>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/register" component={Register}/>
                       <Route path="/common" render={() =>
                             <Common>
                                 <Route path="/common/order/detail/:orderId" component={OrderDetail} />
