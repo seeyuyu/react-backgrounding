@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter, Route, Switch, Redirect} from 'react-router-dom'
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import App from './App'
 import Login from './pages/login/login.js'
 import Admin from './admin'
@@ -30,26 +30,29 @@ import Line from './pages/echarts/line/index'
 import Permission from './pages/permission'
 import Register from './pages/register/register.js'
 import Commodity from './pages/commodity/commodity.js'
+// 引入employee
+import Employee from './pages/employee/employee.js'
+// 
+export default class ERouter extends React.Component {
 
-export default class ERouter extends React.Component{
-
-    render(){
-    return (
-        <HashRouter>
-            <App>
-                <Switch>
-                    <Route path="/login" component={Login}/>
-                    <Route path="/register" component={Register}/>
-                      <Route path="/common" render={() =>
+    render() {
+        return (
+            <HashRouter>
+                <App>
+                    <Switch>
+                        <Route path="/login" component={Login} />
+                        <Route path="/register" component={Register} />
+                        <Route path="/common" render={() =>
                             <Common>
                                 <Route path="/common/order/detail/:orderId" component={OrderDetail} />
                             </Common>
                         }
                         />
-                        <Route path="/" render={()=>
+                        <Route path="/" render={() =>
                             <Admin>
                                 <Switch>
                                     <Route path='/home' component={Home} />
+                                    <Route path='/employee' component = {Employee}/>
                                     <Route path="/ui/buttons" component={Buttons} />
                                     <Route path="/ui/modals" component={Modals} />
                                     <Route path="/ui/loadings" component={Loadings} />
@@ -71,11 +74,11 @@ export default class ERouter extends React.Component{
                                     <Route path="/charts/pie" component={Pie} />
                                     <Route path="/charts/line" component={Line} />
                                     <Route path="/permission" component={Permission} />
-                                    <Route path="/commodity/view" component={Commodity}/>
+                                    <Route path="/commodity/view" component={Commodity} />
                                     <Redirect to="/home" />
                                     {/* <Route component={NoMatch} /> */}
                                 </Switch>
-                            </Admin>         
+                            </Admin>
                         } />
                     </Switch>
                 </App>
