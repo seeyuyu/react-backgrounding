@@ -1,6 +1,8 @@
 import React from 'react';
 import { Row, Divider ,Col, Table, Input, Button } from 'antd';
 import './employee.less'
+import Add from './employeeAdd'
+
 const columns=[
   {
     title:'ID',       //当前显示的名字
@@ -34,87 +36,87 @@ const columns=[
     )
   },
 ]
+const tableData =[
+  {
+    id:'1',
+    name:'lidy',
+    tel:'25',
+    email:'lidongyan_cn@163.com',
+  
+  },{
+    id:'2',
+    name:'yyt',
+    tel:'25',
+    email:'yyt@163.com',
+   
+  },{
+    id:'3',
+    name:'lidy',
+    tel:'25',
+    email:'lidongyan_cn@163.com',
+    
+  },{
+    id:'4',
+    name:'yyt',
+    tel:'25',
+    email:'yyt@163.com',
+   
+  },{
+    id:'5',
+    name:'lidy',
+    tel:'25',
+    email:'lidongyan_cn@163.com',
+    
+  },{
+    id:'6',
+    name:'yyt',
+    tel:'25',
+    email:'yyt@163.com',
+   
+  },{
+    id:'7',
+    name:'lidy',
+    tel:'25',
+    email:'lidongyan_cn@163.com',
+    
+  },{
+    id:'8',
+    name:'yyt',
+    tel:'25',
+    email:'yyt@163.com',
+   
+  },{
+    id:'9',
+    name:'lidy',
+    tel:'25',
+    email:'lidongyan_cn@163.com',
+   
+  },{
+    id:'10',
+    name:'yyt',
+    tel:'25',
+    email:'yyt@163.com',
+   
+  },{
+    id:'11',
+    name:'lidy',
+    tel:'25',
+    email:'lidongyan_cn@163.com',
+   
+  },{
+    id:'12',
+    name:'yyt',
+    tel:'25',
+    email:'yyt@163.com',
+    
+  }
+]
 
 export default class Employee extends React.Component {
 
   state = {};
   render() {
 
-    const tableData =[
-      {
-        id:'1',
-        name:'lidy',
-        tel:'25',
-        email:'lidongyan_cn@163.com',
-      
-      },{
-        id:'2',
-        name:'yyt',
-        tel:'25',
-        email:'yyt@163.com',
-       
-      },{
-        id:'3',
-        name:'lidy',
-        tel:'25',
-        email:'lidongyan_cn@163.com',
-        
-      },{
-        id:'4',
-        name:'yyt',
-        tel:'25',
-        email:'yyt@163.com',
-       
-      },{
-        id:'5',
-        name:'lidy',
-        tel:'25',
-        email:'lidongyan_cn@163.com',
-        
-      },{
-        id:'6',
-        name:'yyt',
-        tel:'25',
-        email:'yyt@163.com',
-       
-      },{
-        id:'7',
-        name:'lidy',
-        tel:'25',
-        email:'lidongyan_cn@163.com',
-        
-      },{
-        id:'8',
-        name:'yyt',
-        tel:'25',
-        email:'yyt@163.com',
-       
-      },{
-        id:'9',
-        name:'lidy',
-        tel:'25',
-        email:'lidongyan_cn@163.com',
-       
-      },{
-        id:'10',
-        name:'yyt',
-        tel:'25',
-        email:'yyt@163.com',
-       
-      },{
-        id:'11',
-        name:'lidy',
-        tel:'25',
-        email:'lidongyan_cn@163.com',
-       
-      },{
-        id:'12',
-        name:'yyt',
-        tel:'25',
-        email:'yyt@163.com',
-        
-      }
-    ]
 
     return (
       <div>
@@ -135,9 +137,10 @@ export default class Employee extends React.Component {
             columns= {columns}
             dataSource ={tableData}
           />
-
         </div>
+        <Add/>
       </div>
+      
     )
   }
 }
