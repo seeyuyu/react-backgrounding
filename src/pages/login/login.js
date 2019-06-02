@@ -9,11 +9,8 @@ const FormItem = Form.Item;
 
 export default class Login extends React.Component {
     state = {};
-
     componentDidMount() {//每次进入登录页清除之前的登录信息
-        
     }
-
     loginReq = (params) => {
         // window.location.href = '/#/';
         let username =params.username;
@@ -99,7 +96,6 @@ class LoginForm extends React.Component {
         });
     };
  
-
     checkUsername = (rule, value, callback) => {
         var reg = /^\w+$/;
         if (!value) {

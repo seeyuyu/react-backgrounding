@@ -3,39 +3,7 @@ import { Row, Divider ,Col, Table, Input, Button } from 'antd';
 import './employee.less'
 import Add from './employeeAdd'
 
-const columns=[
-  {
-    title:'ID',       //当前显示的名字
-    key:'id',         //
-    dataIndex:'id',    //
-  },
-  {
-    title:'姓名',       //当前显示的名字
-    key:'name',         //
-    dataIndex:'name',    //
-  },{
-    title:'联系方式',       //当前显示的名字
-    key:'tel',         //
-    dataIndex:"tel",    //
-  },{
-    title:'邮箱',       //当前显示的名字
-    key:'email',         //
-    dataIndex:'email',    //
-  },{
-    title:'操作',       //当前显示的名字
-    key:'action',         //
-    // dataIndex:'action',    //
-    render :(text,record) =>(
-      <span>
-        <a href="javascript:;">修改</a>
-        <Divider type="vertical" />
-        <a href="javascript:;">详情</a>
-        <Divider type="vertical" />
-        <a href="javascript:;">删除</a>
-      </span>
-    )
-  },
-]
+
 const tableData =[
   {
     id:'1',
@@ -113,16 +81,82 @@ const tableData =[
 ]
 
 export default class Employee extends React.Component {
+  constructor(props){
+    super(props)
+  }
+  state = {
+    visible:false, 
+    sonDate:{
+      userName:'',
+      userPWD:'',
+      userTel:'',
+    }
+  }
+  // 点击修改员工的信息
+  fixUpForm = (recode,text)=>{
+    console.log('123')
+    console.log(recode);
+    console.log(text);
+    this.setState({
+      visible:true,
 
-  state = {};
+    })
+    //好像和vue的refs差距很大
+    // this.refs['employeeAdd'].init('123');
+    // console.log(this.refs['employeeAdd'])
+  }
+  // 关闭弹出框
+  visibleChange =()=>{
+    this.setState({
+      visible:false,
+    })
+  }
+  // 点击增加员工按钮
+  addForm = (e)=>{
+    // this.state.visible = true;
+    console.log('增加按钮被触发')
+    this.setState({
+      visible:true,
+    })
+  } 
   render() {
-
-
+    const columns=[
+      {
+        title:'ID',       //当前显示的名字
+        key:'id',         //
+        dataIndex:'id',    //
+      },
+      {
+        title:'姓名',       //当前显示的名字
+        key:'name',         //
+        dataIndex:'name',    //
+      },{
+        title:'联系方式',       //当前显示的名字
+        key:'tel',         //
+        dataIndex:"tel",    //
+      },{
+        title:'邮箱',       //当前显示的名字
+        key:'email',         //
+        dataIndex:'email',    //
+      },{
+        title:'操作',       //当前显示的名字
+        render :(text,record) =>{
+          return  <span>
+          <Button type="primary" onClick={(record,text) => { this.fixUpForm(record,text) }} > 修改</Button>
+          <Divider type="vertical" />
+          <Button type="primary" > 详情</Button>
+          <Divider type="vertical" />
+          <Button type="primary" > 删除</Button>
+          </span>
+        }
+      },
+    ]
+    const {visible } =this.state;
     return (
       <div>
         <div>
           <Row>
-            <Col span={18}><Button type="primary">添加员工</Button></Col>
+            <Col span={18}><Button type="primary" onClick={this.addForm}>添加员工</Button></Col>
             <Col span={6}>
               <Input className="w200" placeholder="请输入姓名" />
 
@@ -138,7 +172,9 @@ export default class Employee extends React.Component {
             dataSource ={tableData}
           />
         </div>
-        <Add/>
+        <Add ref='employeeAdd' visible={visible} 
+          visibleChange ={this.visibleChange}
+          />
       </div>
       
     )
