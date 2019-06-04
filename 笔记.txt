@@ -35,3 +35,6 @@ echo ${$b.$a};
 ##要讲axios等ajax，封装一下，便于统一管理 I9KM
 
 ##要讲ssh登录配置好，我电脑，不然一直输密码
+
+##6月4号看了一下午react 
+redux包括，state，reducer ,action ，通过dispath来出发action,启动store，监听store
