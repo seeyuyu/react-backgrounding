@@ -18,6 +18,22 @@ const FormItem = Form.Item;
 
   handleOk = () => {
     this.setState({ loading: true });
+
+    Axios.ajax({
+      url:'',
+      method:'POST',
+      data:{
+        username:'',
+        password:'',
+        email:'',
+        tel:'',
+      }
+    }).then((res) => {
+      console.log(res)
+    }).catch(err =>{
+      console.log(err);
+    })
+
     setTimeout(() => {
       this.setState({ loading: false, visible: false });
     }, 3000)
@@ -72,7 +88,7 @@ const FormItem = Form.Item;
       <div>
         <Modal
           visible={this.props.visible}
-          title={this.state.isModify?"修改员工信息":"增加员工信息"}
+          title={this.props.isModify?"修改员工信息":"增加员工信息"}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={[

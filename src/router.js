@@ -38,7 +38,7 @@ export default class ERouter extends React.Component {
     render() {
         return (
             <HashRouter>
-                <App>
+              <App>
                     <Switch>
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />

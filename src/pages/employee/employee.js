@@ -86,20 +86,27 @@ export default class Employee extends React.Component {
   }
   state = {
     visible:false, 
+    isModify:false,
     sonDate:{
-      userName:'',
-      userPWD:'',
-      userTel:'',
+      name:'',
+      tel:'',
+      email:''
     }
   }
   // 点击修改员工的信息
-  fixUpForm = (recode,text)=>{
-    console.log('123')
-    console.log(recode);
+  fixUpForm = (text)=>{
+    // console.log('123')
+    const {name,tel,email} =text;
+    console.log();
     console.log(text);
     this.setState({
       visible:true,
-
+      isModify:true,
+      sonDate:{
+        name,
+        tel,
+        email
+      }
     })
     //好像和vue的refs差距很大
     // this.refs['employeeAdd'].init('123');
@@ -117,6 +124,7 @@ export default class Employee extends React.Component {
     console.log('增加按钮被触发')
     this.setState({
       visible:true,
+      isModify:false,
     })
   } 
   render() {
@@ -140,18 +148,18 @@ export default class Employee extends React.Component {
         dataIndex:'email',    //
       },{
         title:'操作',       //当前显示的名字
-        render :(text,record) =>{
+        render :(text) =>{
           return  <span>
-          <Button type="primary" onClick={(record,text) => { this.fixUpForm(record,text) }} > 修改</Button>
+          <Button type="primary" onClick={ () => { this.fixUpForm(text) }} > 修改</Button>
           <Divider type="vertical" />
-          <Button type="primary" > 详情</Button>
+          <Button type="primary" onClick={() => {}} > 详情</Button>
           <Divider type="vertical" />
-          <Button type="primary" > 删除</Button>
+          <Button type="primary" onClick ={() => {}}> 删除</Button>
           </span>
         }
       },
     ]
-    const {visible } =this.state;
+    const {visible ,isModify} =this.state;
     return (
       <div>
         <div>
@@ -172,7 +180,11 @@ export default class Employee extends React.Component {
             dataSource ={tableData}
           />
         </div>
-        <Add ref='employeeAdd' visible={visible} 
+        <Add 
+          ref='employeeAdd' 
+          visible={visible}
+          isModify ={isModify} 
+          fatherDate = {sonDate}
           visibleChange ={this.visibleChange}
           />
       </div>

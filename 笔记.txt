@@ -38,3 +38,5 @@ echo ${$b.$a};
 
 ##6月4号看了一下午react 
 redux包括，state，reducer ,action ，通过dispath来出发action,启动store，监听store
+
+##感觉晚上不想动？下午的时间是应该用来学习还是codeing
