@@ -18,31 +18,46 @@ const FormItem = Form.Item;
 
   handleOk = () => {
     this.setState({ loading: true });
-
-    Axios.ajax({
-      url:'',
-      method:'POST',
-      data:{
-        username:'',
-        password:'',
-        email:'',
-        tel:'',
-      }
-    }).then((res) => {
-      console.log(res)
-    }).catch(err =>{
-      console.log(err);
-    })
+    this.props.sendSonDate(this.props.form.getFieldsValue(),this.props.isModify);
+    // console.log('向父级发送数据',this.props.form.getFieldsValue(),this.props.isModify)
+    
+    // Axios.ajax({
+    //   url:'',
+    //   method:'POST',
+    //   data:{
+    //     username:'',
+    //     password:'',
+    //     email:'',
+    //     tel:'',
+    //   }
+    // }).then((res) => {
+    //   console.log(res)
+    // }).catch(err =>{
+    //   console.log(err);
+    // })
 
     setTimeout(() => {
       this.setState({ loading: false, visible: false });
     }, 3000)
   };
+  // 表单中的重置按钮
+  handleReset =() =>{
+    console.log('重置按钮');
+    // this.props.form
+  };
 
   handleCancel = () => {
     // this.setState({ visible: false });
     this.props.visibleChange();
+    console.log('关闭页')
+    this.handleResetClick();
   };
+
+  handleResetClick = ()=>{
+    console.log('清空表单');
+    this.props.form.resetFields();
+  };
+
   checkUsername = (rule, value, callback) => {
     var reg = /^\w+$/;
     if (!value) {
@@ -53,15 +68,7 @@ const FormItem = Form.Item;
       callback();
     }
   };
-
-  checkPWD = (rule, value, callback) => {
-    if (!value) {
-      callback('请输入密码!');
-    } else {
-      callback();
-    }
-  };
-
+ 
   checkTel = (rule, value, callback) => {
     var reg = /^\d+$/;
     if (!value) {
@@ -92,16 +99,19 @@ const FormItem = Form.Item;
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              Return
+            <Button key="back" onClick={this.handleReset}>
+              重置
             </Button>,
             <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
-              Submit
+              提交
             </Button>,
           ]}
         >
 
-          <Form className="login-form">
+          <Form 
+            className="login-form"
+            
+          >
             {/** 这是用户名 */}
             <FormItem>
               {getFieldDecorator('employeeName', {
@@ -112,20 +122,21 @@ const FormItem = Form.Item;
               )}
             </FormItem>
 
-            <FormItem>
+            {/* <FormItem>
               {getFieldDecorator('employeePWD', {
                 // initialValue:'admin',
                 rules: [{ validator: this.checkPWD }]
               })(
                 <Input type="password" placeholder="密码" wrappedcomponentref={(inst) => this.pwd = inst} />
               )}
-            </FormItem>
+            </FormItem> */}
+
             <FormItem>
               {getFieldDecorator('employeeTel', {
                 // initialValue:'admin',
                 rules: [{ validator: this.checkTel }]
               })(
-                <Input type="password" placeholder="电话"  />
+                <Input type="text" placeholder="电话"  />
               )}
             </FormItem>
             <FormItem>
@@ -133,7 +144,7 @@ const FormItem = Form.Item;
                 // initialValue:'admin',
                 rules: [{ validator: this.checkEmail }]
               })(
-                <Input type="password" placeholder="邮箱"  />
+                <Input  placeholder="邮箱"  />
               )}
             </FormItem>
           </Form>
@@ -142,6 +153,24 @@ const FormItem = Form.Item;
     );
   }
 }
-EmployeeAdd = Form.create({})(EmployeeAdd);
+EmployeeAdd = Form.create({
+  mapPropsToFields:(props)=>{
+    console.log('value is ',props)
+    // 如果是修改，我们就执行赋值操作
+    if(props.isModify){
+      return {
+        employeeEmail: Form.createFormField({value: props.fatherDate.email}),
+        employeeTel: Form.createFormField({value: props.fatherDate.tel}) ,
+        employeeName: Form.createFormField({value: props.fatherDate.name})
+      }
+    }else{
+      return false
+    }
+    
+  },
+  onValuesChange: (props, changeValue,allValue) =>{
+   console.log('changeValue is ',changeValue) 
+  }
+})(EmployeeAdd);
 export default EmployeeAdd;
 // ReactDOM.render(<App />, mountNode);

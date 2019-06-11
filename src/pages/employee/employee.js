@@ -87,7 +87,8 @@ export default class Employee extends React.Component {
   state = {
     visible:false, 
     isModify:false,
-    sonDate:{
+
+    sonDate: {
       name:'',
       tel:'',
       email:''
@@ -117,6 +118,19 @@ export default class Employee extends React.Component {
     this.setState({
       visible:false,
     })
+  }
+  // 从子，弹出框中拿到数据，并且发送ajax请求
+  getSonDate =(params,isModify) =>{
+    console.log(params);
+    console.log(isModify);
+    console.log('接受子级数据如上');
+    if(isModify){
+      //修改表单
+
+    }else{
+      //添加表单
+
+    }
   }
   // 点击增加员工按钮
   addForm = (e)=>{
@@ -159,7 +173,7 @@ export default class Employee extends React.Component {
         }
       },
     ]
-    const {visible ,isModify} =this.state;
+    const {visible ,isModify, sonDate} =this.state;
     return (
       <div>
         <div>
@@ -186,6 +200,7 @@ export default class Employee extends React.Component {
           isModify ={isModify} 
           fatherDate = {sonDate}
           visibleChange ={this.visibleChange}
+          sendSonDate = {this.getSonDate}
           />
       </div>
       
