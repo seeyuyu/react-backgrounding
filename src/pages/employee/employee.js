@@ -87,7 +87,7 @@ export default class Employee extends React.Component {
   state = {
     visible:false, 
     isModify:false,
-
+    isReadOnly:false,
     sonDate: {
       name:'',
       tel:'',
@@ -95,14 +95,14 @@ export default class Employee extends React.Component {
     }
   }
   // 点击修改员工的信息
-  fixUpForm = (text)=>{
+  fixUpForm = (text,isReadOnly=false)=>{
     // console.log('123')
     const {name,tel,email} =text;
-    console.log();
     console.log(text);
     this.setState({
       visible:true,
       isModify:true,
+      isReadOnly,
       sonDate:{
         name,
         tel,
@@ -139,6 +139,7 @@ export default class Employee extends React.Component {
     this.setState({
       visible:true,
       isModify:false,
+      isReadOnly:false,
     })
   } 
   render() {
@@ -166,14 +167,14 @@ export default class Employee extends React.Component {
           return  <span>
           <Button type="primary" onClick={ () => { this.fixUpForm(text) }} > 修改</Button>
           <Divider type="vertical" />
-          <Button type="primary" onClick={() => {}} > 详情</Button>
+          <Button type="primary" onClick={() => {this.fixUpForm(text,true)}} > 详情</Button>
           <Divider type="vertical" />
           <Button type="primary" onClick ={() => {}}> 删除</Button>
           </span>
         }
       },
     ]
-    const {visible ,isModify, sonDate} =this.state;
+    const {visible ,isModify, sonDate,isReadOnly} =this.state;
     return (
       <div>
         <div>
@@ -199,6 +200,7 @@ export default class Employee extends React.Component {
           visible={visible}
           isModify ={isModify} 
           fatherDate = {sonDate}
+          isReadOnly = {isReadOnly}
           visibleChange ={this.visibleChange}
           sendSonDate = {this.getSonDate}
           />

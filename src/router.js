@@ -19,11 +19,11 @@ import BasicTable from './pages/table/basicTable'
 import HighTable from './pages/table/highTable'
 import Rich from './pages/rich'
 import City from './pages/city/index'
-import Order from './pages/order/index'
+// import Order from './pages/order/index'
 import Common from './common'
 import OrderDetail from './pages/order/detail'
 import BikeMap from './pages/map/bikeMap'
-import User from './pages/user/index'
+// import User from './pages/user/index'
 import Bar from './pages/echarts/bar/index'
 import Pie from './pages/echarts/pie/index'
 import Line from './pages/echarts/line/index'
@@ -32,7 +32,11 @@ import Register from './pages/register/register.js'
 import Commodity from './pages/commodity/commodity.js'
 // 引入employee
 import Employee from './pages/employee/employee.js'
-// 
+// 同理有user
+import User from './pages/emp_user/user.js'
+// 同理有order
+import Order from './pages/emp_order/order.js'
+
 export default class ERouter extends React.Component {
 
     render() {

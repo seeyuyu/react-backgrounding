@@ -38,6 +38,7 @@ const FormItem = Form.Item;
 
     setTimeout(() => {
       this.setState({ loading: false, visible: false });
+      this.props.visibleChange();
     }, 3000)
   };
   // 表单中的重置按钮
@@ -118,7 +119,7 @@ const FormItem = Form.Item;
                 // initialValue:'lidy',
                 rules: [{ validator: this.checkUsername }]
               })(
-                <Input placeholder="用户名" />
+                <Input readOnly={this.props.isReadOnly} placeholder="用户名" />
               )}
             </FormItem>
 
@@ -136,7 +137,7 @@ const FormItem = Form.Item;
                 // initialValue:'admin',
                 rules: [{ validator: this.checkTel }]
               })(
-                <Input type="text" placeholder="电话"  />
+                <Input type="text" readOnly={this.props.isReadOnly} placeholder="电话"  />
               )}
             </FormItem>
             <FormItem>
@@ -144,7 +145,7 @@ const FormItem = Form.Item;
                 // initialValue:'admin',
                 rules: [{ validator: this.checkEmail }]
               })(
-                <Input  placeholder="邮箱"  />
+                <Input  placeholder="邮箱"  readOnly={this.props.isReadOnly} />
               )}
             </FormItem>
           </Form>
