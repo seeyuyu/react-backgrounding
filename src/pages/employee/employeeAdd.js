@@ -6,7 +6,10 @@ const FormItem = Form.Item;
   constructor(props){
     super(props)
   }
-
+  propTypes: {
+    visible: React.PropTypes.array
+  }
+  
   state = {
     loading: false,
     isModify:false, //默认是增加员工
