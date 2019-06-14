@@ -1,14 +1,15 @@
 import React from 'react';
 import { Modal, Button, Form, Input } from 'antd';
+import PropTypes from 'prop-types';
 const FormItem = Form.Item;
 
- class EmployeeAdd extends React.Component {
+
+
+class EmployeeAdd extends React.Component {
   constructor(props){
     super(props)
   }
-  propTypes: {
-    visible: React.PropTypes.array
-  }
+ 
   
   state = {
     loading: false,
@@ -157,6 +158,7 @@ const FormItem = Form.Item;
     );
   }
 }
+
 EmployeeAdd = Form.create({
   mapPropsToFields:(props)=>{
     console.log('value is ',props)

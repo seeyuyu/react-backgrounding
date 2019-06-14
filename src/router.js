@@ -69,11 +69,11 @@ export default class ERouter extends React.Component {
                                     <Route path="/form/reg" component={FormRegister} />
                                     <Route path="/table/basic" component={BasicTable} />
                                     <Route path="/table/high" component={HighTable} />
-                                    <Route path='/rich' component={Rich} />
+                                    {/* <Route path='/rich' component={Rich} />
                                     <Route path="/city" component={City} />
                                     <Route path="/order" component={Order} />
                                     <Route path='/bikeMap' component={BikeMap} />
-                                    <Route path='/user' component={User} />
+                                    <Route path='/user' component={User} /> */}
                                     <Route path="/charts/bar" component={Bar} />
                                     <Route path="/charts/pie" component={Pie} />
                                     <Route path="/charts/line" component={Line} />
